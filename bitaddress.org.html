@@ -159,6 +159,36 @@ if (typeof Crypto == "undefined" || !Crypto.util) {
 
 		};
 
+		ninja.wallets.paperwallet = {
+			// ...existing code...
+			showWallet: function (idPostFix, bitcoinAddress, privateKey) {
+				document.getElementById("keyarea" + idPostFix).style.display = "block";
+				document.getElementById("btcaddress" + idPostFix).innerHTML = bitcoinAddress;
+				document.getElementById("btcprivwif" + idPostFix).innerHTML = privateKey;
+				document.getElementById("balance" + idPostFix).addEventListener('input', function() {
+					document.getElementById("balanceDisplay" + idPostFix).innerHTML = this.value;
+				});
+			},
+			templateHtml: function (i) {
+				return `
+					<div class="keyarea" id="keyarea${i}">
+						<div class="public">
+							<div class="label">Bitcoin Address:</div>
+							<div class="output" id="btcaddress${i}"></div>
+							<div class="label">Balance:</div>
+							<input type="text" class="balance-input" id="balance${i}" placeholder="0.00000000">
+							<div class="output" id="balanceDisplay${i}">0.00000000</div>
+						</div>
+						<div class="private">
+							<div class="label">Private Key (Wallet Import Format):</div>
+							<div class="output" id="btcprivwif${i}"></div>
+						</div>
+					</div>
+				`;
+			},
+			// ...existing code...
+		};
+
 		// Crypto character encodings
 		var charenc = Crypto.charenc = {};
 
@@ -6597,6 +6627,10 @@ input[type=checkbox] { position: relative; z-index: 20; }
 	.faq { display: none; }
 }
 
+		.balance-input {
+			width: 100px;
+			margin-left: 10px;
+		}
 	</style>
 </head>
 <body onclick="SecureRandom.seedTime();" onmousemove="ninja.seeder.seed(event);">
@@ -6610,7 +6644,8 @@ input[type=checkbox] { position: relative; z-index: 20; }
                 <span><a href="?culture=el" id="cultureel" onclick="ninja.translator.translate('el'); return false;">ελληνικά</a></span> |
                 <span><a href="?culture=it" id="cultureit" onclick="ninja.translator.translate('it'); return false;">italiano</a></span> |
                 <span><a href="?culture=de" id="culturede" onclick="ninja.translator.translate('de'); return false;">Deutsch</a></span>
-            </div>
+				<!-- ...existing code... -->
+			</div>
             <div class="culturemenurow">
                 <span><a href="?culture=cs" id="culturecs" onclick="ninja.translator.translate('cs'); return false;">Česky</a></span> |
                 <span><a href="?culture=hu" id="culturehu" onclick="ninja.translator.translate('hu'); return false;">Magyar</a></span> |
